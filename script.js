@@ -174,7 +174,7 @@ function showHome(sc){showView('home');refreshHome();if(sc){const el=$('#l-'+sc)
 let mode='in';
 function setMode(m){mode=m;const f=$('#af');document.querySelectorAll('.tabs button[data-m]').forEach(x=>x.classList.toggle('on',x.dataset.m===m));
 $('#nl').classList.toggle('hide',m==='in');$('#cl').classList.toggle('hide',m==='in');$('#rr').classList.toggle('hide',m==='up');$('#dh').classList.toggle('hide',m==='up');
-f.n.required=f.p2.required=m==='up';f.p.autocomplete=m==='up'?'new-password':'current-password';$('#ab').textContent=m==='in'?'Login':'Sign Up';$('#am').textContent=''}
+f.n.required=f.p2.required=m==='up';f.p.autocomplete=m==='up'?'new-password':'current-password';$('#ab').textContent=m==='in'?'Login':'Sign Up';$('#am').textContent='';f.dataset.m=m;$('#ah').textContent=m==='in'?'أهلًا بيك تاني':'ابدأ حسابك مجانًا';$('#as').textContent=m==='in'?'سجّل دخولك وكمّل شغلك على حملاتك.':'دقيقة واحدة وتبدأ تنظّم حملاتك.'}
 function showAuth(m){showView('auth');setMode(m);scrollTo(0,0)}
 document.querySelectorAll('.tabs button[data-m]').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
 const rem=store.get('s2t_email');if(rem){$('#af').e.value=rem;$('#af').r.checked=true}
@@ -198,6 +198,8 @@ const a=e.target.closest('[data-a]');
 if(!a){if(S.dd&&!e.target.closest('.dd')){S.dd='';topbar()}return}
 const k=a.dataset.a;
 if(k==='theme')setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
+else if(k==='eye'){const i=a.previousElementSibling,sh=i.type==='password';i.type=sh?'text':'password';a.textContent=sh?'🙈':'👁️'}
+else if(k==='demo'){const f=$('#af');f.e.value='demo@sawa2tlek.com';f.p.value='demo123';f.requestSubmit()}
 else if(k==='menu'){$('#sb').classList.toggle('open');$('#ov').classList.toggle('on')}
 else if(k==='bell'){S.dd=S.dd==='n'?'':'n';topbar()}
 else if(k==='user'){S.dd=S.dd==='u'?'':'u';topbar()}
@@ -229,3 +231,17 @@ else if(id==='cf'){const q=$('#ci').value.trim();if(!q)return;S.chat.push({r:'u'
 else if(id==='pf'){S.user.name=f.n.value||S.user.name;const u=users();if(u[S.user.email]){u[S.user.email].name=S.user.name;saveUsers(u)}topbar();$('#pm').textContent='تم الحفظ ✓'}
 else if(id==='sf'){$('#sm').textContent='تم تغيير كلمة المرور (تجريبي) ✓';f.reset()}
 else if(id==='uf'){S.users.push([f.n.value,f.e.value,f.r.value]);render()}});
+
+
+/* ========== تحسينات صفحة الدخول ========== */
+{const f=$('#af'),sg=$('#sg'),st=$('#sgt'),cap=$('#cap');
+f.p.addEventListener('input',()=>{const v=f.p.value;let n=0;if(v.length>=6)n++;if(v.length>=10)n++;if(/[a-z]/.test(v)&&/[A-Z]/.test(v)&&/\d/.test(v))n++;if(/[^\w\s]/.test(v)&&v.length>=8)n++;if(!v)n=0;sg.dataset.s=n;st.textContent=v?'قوة كلمة المرور: '+['ضعيفة','ضعيفة','متوسطة','قوية','ممتازة'][n]:''});
+f.p.addEventListener('keyup',e=>cap.classList.toggle('on',!!(e.getModifierState&&e.getModifierState('CapsLock'))));
+f.p.addEventListener('blur',()=>cap.classList.remove('on'));
+f.addEventListener('reset',()=>setTimeout(()=>{sg.dataset.s=0;st.textContent=''}));
+/* حالة تحميل + اهتزاز عند الخطأ */
+const _auth=authSubmit;
+authSubmit=async fm=>{const b=$('#ab'),t0=Date.now();b.classList.add('ld');b.disabled=true;
+try{await _auth(fm)}finally{await new Promise(r=>setTimeout(r,Math.max(0,550-(Date.now()-t0))));b.classList.remove('ld');b.disabled=false;
+const m=$('#am');if(m.textContent&&m.style.color==='var(--bad)'){fm.classList.remove('shk');void fm.offsetWidth;fm.classList.add('shk')}}};
+}
