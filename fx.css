@@ -1,0 +1,83 @@
+/* sawa2tlek – طبقة الحركة والانتقالات 2026 (فوق style.css من غير تعديله) */
+:root{--ease:cubic-bezier(.22,1,.36,1)}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+html.tr *,html.tr *::before,html.tr *::after{transition:background-color .45s,color .45s,border-color .45s,box-shadow .45s!important}
+
+/* شريط تقدم التمرير */
+#fxb{position:fixed;inset:0 0 auto 0;height:3px;z-index:99;transform-origin:right;transform:scaleX(var(--sp,0));background:linear-gradient(90deg,var(--sky),var(--pri));pointer-events:none}
+
+/* انتقال بين الصفحات الرئيسية (Landing / Auth / App) */
+@keyframes vin{from{opacity:0;translate:0 18px;filter:blur(8px)}to{opacity:1;translate:0;filter:none}}
+#home,#auth .ab,#app .main{animation:vin .6s var(--ease) both}
+
+/* هيدر زجاجي */
+.lh{background:color-mix(in srgb,var(--card) 78%,transparent);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);transition:box-shadow .3s,background .3s}
+.lh.sc{box-shadow:0 8px 30px #142b4a22}
+.lh .wrap{transition:padding .3s var(--ease)}
+.lh.sc .wrap{padding-block:4px}
+.ln button{transition:background .25s,color .25s,transform .25s var(--ease)}
+.ln button:hover{color:var(--tx);transform:translateY(-1px)}
+
+/* الهيرو */
+.hero{position:relative;overflow:hidden;background:linear-gradient(120deg,#142B4A,#2563EB,#142B4A);background-size:220% 220%;animation:hg 14s ease-in-out infinite}
+@keyframes hg{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(70px);opacity:.45;pointer-events:none;translate:0 calc(var(--py,0)*-.25px)}
+.hero::before{width:380px;height:380px;background:#60A5FA;top:-140px;inset-inline-start:-80px;animation:fl 9s ease-in-out infinite}
+.hero::after{width:320px;height:320px;background:#2563EB;bottom:-120px;inset-inline-end:-60px;animation:fl 11s ease-in-out infinite reverse}
+@keyframes fl{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,30px) scale(1.15)}}
+.hero .wrap{position:relative;z-index:1}
+.hero .tg2,.hero h1,.hero p,.hero .cta{animation:vin .9s var(--ease) both}
+.hero h1{animation-delay:.12s}.hero p{animation-delay:.24s}.hero .cta{animation-delay:.36s}
+.hero .tg2{display:inline-block}
+
+/* ظهور العناصر عند التمرير */
+.fx .rv{opacity:0;translate:0 30px;scale:.97;filter:blur(6px);transition:opacity .8s var(--ease),translate .8s var(--ease),scale .8s var(--ease),filter .8s var(--ease);transition-delay:var(--d,0ms)}
+.fx .rv.in{opacity:1;translate:0;scale:1;filter:none}
+
+/* الكروت: رفع + إضاءة تتبع المؤشر */
+.card{position:relative;transition:transform .35s var(--ease),box-shadow .35s,border-color .35s}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .35s;background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--sky) 22%,transparent),transparent 70%)}
+@media(hover:hover){
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 34px color-mix(in srgb,var(--pri) 18%,transparent);border-color:color-mix(in srgb,var(--sky) 60%,var(--bd))}
+.card:hover::before{opacity:1}
+.faq .card:hover,.lc:hover,.ab:hover{transform:none}
+}
+.ic{display:inline-block;transition:transform .4s var(--ease)}
+.card:hover .ic{transform:scale(1.2) rotate(-6deg)}
+.plan.hot{box-shadow:0 0 0 0 color-mix(in srgb,var(--pri) 40%,transparent);animation:pulse 3s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 14px transparent}100%{box-shadow:0 0 0 0 transparent}}
+
+/* الأزرار */
+.btn{position:relative;overflow:hidden;transition:transform .25s var(--ease),box-shadow .25s,filter .25s}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,#fff5 50%,transparent 70%);translate:-120% 0;transition:translate .7s var(--ease)}
+.btn:hover::after{translate:120% 0}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px color-mix(in srgb,var(--pri) 35%,transparent)}
+.btn:active,.chip:active,.ib:active{transform:scale(.96)}
+.ib,.chip,.tabs button{transition:transform .25s var(--ease),background .25s,color .25s,border-color .25s}
+.ib:hover{transform:rotate(18deg)}
+
+/* تابات Login/Sign Up */
+.tabs button.on{box-shadow:0 4px 12px color-mix(in srgb,var(--pri) 40%,transparent)}
+input,select,textarea{transition:border-color .25s,box-shadow .25s}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--sky);box-shadow:0 0 0 4px color-mix(in srgb,var(--sky) 28%,transparent)}
+details p{animation:vin .4s var(--ease)}
+summary{transition:color .2s}details[open] summary{color:var(--lk)}
+
+/* داخل النظام */
+@keyframes pg{from{opacity:0;translate:0 22px;scale:.985}to{opacity:1;translate:0;scale:1}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+#main.pgin>*{animation:pg .6s var(--ease) both;animation-delay:calc(var(--i,0)*70ms)}
+#main.pgin .bar .t i,#main.pgin .mini i{transform-origin:right;animation:grow 1s var(--ease) both;animation-delay:.25s}
+.sb button{transition:background .25s,transform .25s var(--ease),opacity .25s}
+.sb button:hover{transform:translateX(-4px)}
+.sb button.on{box-shadow:0 6px 18px #2563eb66}
+tbody tr{transition:background .2s}tbody tr:hover{background:var(--pri2)}
+.ins{animation:vin .5s var(--ease) both}
+.msg{animation:vin .35s var(--ease) both}
+.dd{animation:vin .25s var(--ease) both}
+.sb{transition:transform .35s var(--ease)}
+.ov{transition:opacity .3s}
+
+/* وصول */
+:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.fx .rv{opacity:1;translate:0;scale:1;filter:none}html{scroll-behavior:auto}}
